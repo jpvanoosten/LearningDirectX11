@@ -8,9 +8,9 @@
 #include <DirectXColors.h>
 
 // STL includes
-#include <algorithm>
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 // Link library dependencies
 #pragma comment(lib, "d3d11.lib")

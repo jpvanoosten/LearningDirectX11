@@ -6,8 +6,8 @@
 
 using namespace DirectX;
 
-const LONG g_WindowWidth = 1280;
-const LONG g_WindowHeight = 720;
+const LONG g_WindowWidth = 640;
+const LONG g_WindowHeight = 480;
 LPCSTR g_WindowClassName = "DirectXWindowClass";
 LPCSTR g_WindowName = "DirectX Template";
 HWND g_WindowHandle = 0;
@@ -110,7 +110,7 @@ int InitApplication( HINSTANCE hInstance, int cmdShow )
     wndClass.lpfnWndProc = &WndProc;
     wndClass.hInstance = hInstance;
     wndClass.hCursor = LoadCursor( nullptr, IDC_ARROW );
-    wndClass.hIcon = LoadIcon( hInstance, MAKEINTRESOURCE(IDI_ICON1) );
+    wndClass.hIcon = LoadIcon( hInstance, MAKEINTRESOURCE(APP_ICON) );
     wndClass.hbrBackground = (HBRUSH)(COLOR_WINDOW+1);
     wndClass.lpszMenuName = nullptr;
     wndClass.lpszClassName = g_WindowClassName;
@@ -746,25 +746,25 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE prevInstance, LPWSTR cmdLine
     // Check for DirectX Math library support.
     if ( !XMVerifyCPUSupport() )
     {
-        MessageBox( nullptr, TEXT("Failed to verify DirectX Math library support."), TEXT("Error"), MB_OK );
+        MessageBox( nullptr, TEXT("Failed to verify DirectX Math library support."), TEXT("Error"), MB_OK|MB_ICONERROR );
         return -1;
     }
 
     if( InitApplication(hInstance, cmdShow) != 0 )
     {
-        MessageBox( nullptr, TEXT("Failed to create applicaiton window."), TEXT("Error"), MB_OK );
+        MessageBox( nullptr, TEXT("Failed to create applicaiton window."), TEXT("Error"), MB_OK|MB_ICONERROR );
         return -1;
     }
 
     if ( InitDirectX(hInstance, g_EnableVSync) != 0 )
     {
-        MessageBox( nullptr, TEXT("Failed to create DirectX device and swap chain."), TEXT("Error"), MB_OK );
+        MessageBox( nullptr, TEXT("Failed to create DirectX device and swap chain."), TEXT("Error"), MB_OK|MB_ICONERROR );
         return -1;
     }
 
     if ( !LoadContent() )
     {
-        MessageBox( nullptr, TEXT("Failed to load content."), TEXT("Error"), MB_OK );
+        MessageBox( nullptr, TEXT("Failed to load content."), TEXT("Error"), MB_OK|MB_ICONERROR );
         return -1;
     }
 
@@ -861,7 +861,7 @@ void Render()
     g_d3dDeviceContext->PSSetShader( g_d3dPixelShader, nullptr, 0 );
 
     g_d3dDeviceContext->OMSetRenderTargets( 1, &g_d3dRenderTargetView, g_d3dDepthStencilView );
-    g_d3dDeviceContext->OMSetDepthStencilState( g_d3dDepthStencilState, 1 );
+    g_d3dDeviceContext->OMSetDepthStencilState( g_d3dDepthStencilState, 0 );
 
     g_d3dDeviceContext->DrawIndexed( _countof(g_Indicies), 0, 0 );
 
